@@ -18,8 +18,7 @@ Returns true if a specified songId has custom data for a specified key
 
 
 ### Usage Examples
-<pre><code>
-//return if the song doesnt have custom data
+<pre><code>//return if the song doesnt have custom data
 if (!CustomSongDataLoader.SongHasCustomData(song.songID))
   return;
 
