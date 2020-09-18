@@ -24,7 +24,7 @@ namespace AudicaModding
         {
             private static void Postfix(DifficultySelect __instance)
             {
-                LoadCustomNames();
+                LoadCustomData();
             }
 
         }
@@ -90,7 +90,8 @@ namespace AudicaModding
 
         }
 
-        public static void LoadCustomNames()
+        //When called, this function will update 'AllCustomData' with data from every song installed (already called on [HarmonyPatch(typeof(SongSelect), "OnEnable", new Type[0])])
+        public static void LoadCustomData()
         {
             if (!SongDataLoaded)
             {
@@ -125,11 +126,13 @@ namespace AudicaModding
             }
         }
 
+        //Tells you if there is any custom song data present for a specified song
         public static bool SongHasCustomData(string songId)
         {
             return AllCustomData.ContainsKey(songId);
         }
 
+        //Tell you if a specified song has data for a specified key
         public static bool SongHasCustomDataKey(string songId, string key)
         {
             if (SongHasCustomData(songId))
@@ -140,6 +143,7 @@ namespace AudicaModding
                 return false;
         }
 
+        //generic function that gets data for a specific song that corresponds to a given key
         public static T GetCustomData<T>(string songID, string key)
         {
             return AllCustomData[songID]._extraJsonData[key].ToObject<T>();
