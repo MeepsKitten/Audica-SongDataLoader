@@ -3,7 +3,12 @@
  
  feel free to include [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest) with any dependant mods you make :D
  
+## Song Browser Users
+In future [Song Browser](https://github.com/octoberU/SongBrowser) releases (Newer than v2.0.1) this mod's functionality will be included automatically.
 
+<b>You do not need this mod if you have an installation of Song Browser newer than v2.0.1</b>
+
+ 
 # "Documentation"
 ## public class CustomSongDataLoader : MelonMod
 ### Methods:
