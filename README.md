@@ -11,6 +11,8 @@
  * Add it as a refrence in your project
  * Include the dll with your mod download (or ask them to download it from [here](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest))
  
+   Need help? Contact CB#1997 on Discord
+ 
 # "Documentation"
 ## public class SongDataLoader
 ### Properties:
