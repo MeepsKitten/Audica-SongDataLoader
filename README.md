@@ -1,35 +1,43 @@
-# Custom Song Data Loader
- A utility that allows mods to read custom song data
+# Song Data Loader
+ A utility that allows mods to read default and custom song data
  
  feel free to include [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest) with any dependant mods you make :D
  
-## Song Browser Users
-In future [Song Browser](https://github.com/octoberU/SongBrowser) releases (Newer than v2.0.1) this mod's functionality will be included automatically.
-
-<b>You do not need this mod if you have an installation of Song Browser newer than v2.0.1</b>
-
- 
 # "Documentation"
-## public class CustomSongDataLoader : MelonMod
+## public class SongDataLoader
+### Properties:
+* <code>public static Dictionary<string, SongData> AllSongData</code>
+Contains all the song data for all loaded songs. Dictionary string is the song ID. Returns a SongData class (documented) below
 ### Methods:
-* <code>public static bool SongHasCustomData(string songId)</code>
-Returns true if there is any custom song data present for a specified songId, otherwise false
+* <code>public static void ReloadSongData()</code>
+Reloads the song data for all songs
 
-* <code>public static bool SongHasCustomDataKey(string songId, string key)</code>
-Returns true if a specified songId has custom data for a specified key
+## public class SongData
+### Properties:
+[insert every default audica song.desc variable]
 
-* <code>public static T GetCustomData`<T>`(string songID, string key)</code>
- generic function that gets data for a specific songId that corresponds to a given key
+### Methods:
+* <code>public bool SongHasCustomData()</code>
+Returns true if there is any custom song data present for a specified SongData, otherwise false
+
+* <code>public bool SongHasCustomDataKey(string key)</code>
+Returns true if a specified SongData has custom data for a specified key
+
+* <code>public T GetCustomData`<T>`(string key)</code>
+ generic function that gets data for a specific SongData that corresponds to a given key
 
 
 ### Usage Examples
 <pre><code>//return if the song doesnt have custom data
-if (!CustomSongDataLoader.SongHasCustomData(song.songID))
-  return;
+if (!SongDataLoader.AllSongData[song.songID].HasCustomData())
+  break;
 
 //if the song has data for the key "customExpert"
-if (CustomSongDataLoader.SongHasCustomDataKey(song.songID, "customExpert"))
+if (SongDataLoader.AllSongData[song.songID].SongHasCustomDataKey("customExpert"))
 {
- 
+
 }
+
+//get a default data value. tempo in this case
+SongDataLoader.AllSongData[song.songID].tempo
 </code></pre>
