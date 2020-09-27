@@ -7,8 +7,8 @@
     <ProjectGuid>{B450DB87-100F-446D-BA5F-93B6E9042F46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CustomSongData</RootNamespace>
-    <AssemblyName>CustomSongData</AssemblyName>
+    <RootNamespace>SongDataLoader</RootNamespace>
+    <AssemblyName>SongDataLoader</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -195,7 +195,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Main.cs" />
+    <Compile Include="src\SongDataLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
