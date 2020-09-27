@@ -1,7 +1,10 @@
 # Song Data Loader
  A utility that allows mods to read default and custom song data
- 
- feel free to include [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest) with any dependant mods you make :D
+
+ # Using Song Data Loader in your mod
+ * Grab [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest)
+ * Add it as a refrence in your project
+ * Include the dll with your mod download (or ask them to download it from [here](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest))
  
 # "Documentation"
 ## public class SongDataLoader
