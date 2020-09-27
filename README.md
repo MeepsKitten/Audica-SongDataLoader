@@ -1,5 +1,10 @@
 # Song Data Loader
  A utility that allows mods to read default and custom song data
+ 
+ # Mods That use Song Data Loader
+ * [Custom Difficulty Names](https://github.com/MeepsKitten/Audica-CustomDifficultyNames)
+ 
+ (Missing a mod? Contact CB#1997 on Discord)
 
  # Using Song Data Loader in your mod
  * Grab [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest)
