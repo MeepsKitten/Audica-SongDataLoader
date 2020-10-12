@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.IO.Compression;
+using Newtonsoft.Json.Serialization;
 
 namespace AudicaModding
 {
@@ -56,7 +57,6 @@ namespace AudicaModding
             public string midiFile { get; set; }
             public string fusionSpatialized { get; set; }
             public string fusionUnspatialized { get; set; }
-            public string targetDrums { get; set; }
             public string sustainSongRight { get; set; }
             public string moggSustainSongRight { get; set; }
             public string sustainSongLeft { get; set; }
@@ -67,14 +67,17 @@ namespace AudicaModding
             public string songEndEvent { get; set; }
             public float prerollSeconds { get; set; }
             public bool useMidiForCues { get; set; }
+            public bool hidden { get; set; }
+            public int offset { get; set; }
+
+
+            //optional
+            public NRBookmark[] bookmarks { get; set; }
+            public string author { get; set; }
+            public float previewStartSeconds { get; set; }
+            public string targetDrums { get; set; }
             public float songEndPitchAdjust { get; set; }
             public string highScoreEvent { get; set; }
-            public bool hidden { get; set; }
-            public string author { get; set; }
-            public int offset { get; set; }
-            public float previewStartSeconds { get; set; }
-
-           public NRBookmark[] bookmarks { get; set; }
 
             [JsonExtensionData]
             private IDictionary<string, JToken> _extraJsonData { get; set; }
@@ -87,11 +90,10 @@ namespace AudicaModding
                     return false;
             }
 
-
             //Tell you if a specified song has data for a specified key
             public bool SongHasCustomDataKey(string key)
             {
-                    return _extraJsonData.ContainsKey(key);
+                return _extraJsonData.ContainsKey(key);
             }
 
             //generic function that gets data for a specific song that corresponds to a given key
@@ -99,8 +101,9 @@ namespace AudicaModding
             {
                 return _extraJsonData[key].ToObject<T>();
             }
-
         }
+
+
 
         //When called, this function will update 'AllCustomData' with data from every song installed (already called on [HarmonyPatch(typeof(SongSelect), "OnEnable", new Type[0])])
         private static void LoadSongData()
@@ -121,11 +124,16 @@ namespace AudicaModding
                             StreamReader reader = new StreamReader(songData);
                             string descDump = reader.ReadToEnd();
                             SongData JSONData = new SongData();
-                            JSONData = JsonConvert.DeserializeObject<SongData>(descDump);
-                            //MelonLogger.Log(descDump);
+                            JSONData = JsonConvert.DeserializeObject<SongData>(descDump, new JsonSerializerSettings
+                            {
+                                Error = (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs args) =>
+                                {
+                                    args.ErrorContext.Handled = true;
+                                    MelonLogger.LogError(data.zipPath + ": song.desc has invalid values");
+                                }
+                            });
 
                             AllSongData[data.songID] = JSONData;
-
                         }
                     }
                     SongDataLoaded = true;
