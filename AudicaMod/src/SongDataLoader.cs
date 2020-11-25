@@ -8,6 +8,8 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.IO.Compression;
 using Newtonsoft.Json.Serialization;
+using System.Collections;
+using System.Threading;
 
 namespace AudicaModding
 {
@@ -16,18 +18,17 @@ namespace AudicaModding
 
         private static bool SongDataLoaded = false;
 
+        public static bool IsDataLoaded()
+        {
+            return SongDataLoaded;
+        }
+
         //dictionary with song id to custom data
         public static Dictionary<string, SongData> AllSongData = new Dictionary<string, SongData>();
 
-        //load custom data when song list is enabled
-        [HarmonyPatch(typeof(SongSelect), "OnEnable", new Type[0])]
-        private static class LoadDataOnSongSelectLoad
+        public override void OnApplicationStart()
         {
-            private static void Postfix(DifficultySelect __instance)
-            {
-                LoadSongData();
-            }
-
+            SongList.OnSongListLoaded.On(new Action(() => { LoadSongData(); }));
         }
 
         public static class BuildInfo
@@ -35,7 +36,7 @@ namespace AudicaModding
             public const string Name = "SongDataLoader";  // Name of the Mod.  (MUST BE SET)
             public const string Author = "MeepsKitten"; // Author of the Mod.  (Set as null if none)
             public const string Company = null; // Company that made the Mod.  (Set as null if none)
-            public const string Version = "1.0.0"; // Version of the Mod.  (MUST BE SET)
+            public const string Version = "1.1.0"; // Version of the Mod.  (MUST BE SET)
             public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
         }
 
@@ -84,6 +85,12 @@ namespace AudicaModding
 
             public bool HasCustomData()
             {
+                if (!SongDataLoaded)
+                {
+                    MelonLogger.Log("Song data not loaded before attempted use");
+                    return false;
+                }
+
                 if (_extraJsonData != null)
                     return _extraJsonData.Count > 0;
                 else
@@ -106,39 +113,46 @@ namespace AudicaModding
 
 
         //When called, this function will update 'AllCustomData' with data from every song installed (already called on [HarmonyPatch(typeof(SongSelect), "OnEnable", new Type[0])])
-        private static void LoadSongData()
+        public static void LoadSongData()
         {
             if (!SongDataLoaded)
             {
                 AllSongData = new Dictionary<string, SongData>();
 
-                foreach (SongList.SongData data in SongList.I.songs.ToArray())
+                new Thread(() =>
                 {
-                    ZipArchive SongFiles = ZipFile.OpenRead(data.foundPath);
+                    Thread.CurrentThread.IsBackground = true;
 
-                    foreach (ZipArchiveEntry entry in SongFiles.Entries)
+                    foreach (SongList.SongData data in SongList.I.songs.ToArray())
                     {
-                        if (entry.Name == "song.desc")
-                        {
-                            Stream songData = entry.Open();
-                            StreamReader reader = new StreamReader(songData);
-                            string descDump = reader.ReadToEnd();
-                            SongData JSONData = new SongData();
-                            JSONData = JsonConvert.DeserializeObject<SongData>(descDump, new JsonSerializerSettings
-                            {
-                                Error = (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs args) =>
-                                {
-                                    args.ErrorContext.Handled = true;
-                                    MelonLogger.LogError(data.zipPath + ": song.desc has invalid values");
-                                }
-                            });
+                        ZipArchive SongFiles = ZipFile.OpenRead(data.foundPath);
 
-                            AllSongData[data.songID] = JSONData;
+                        foreach (ZipArchiveEntry entry in SongFiles.Entries)
+                        {
+                            if (entry.Name == "song.desc")
+                            {
+                                Stream songData = entry.Open();
+                                StreamReader reader = new StreamReader(songData);
+                                string descDump = reader.ReadToEnd();
+                                SongData JSONData = new SongData();
+                                JSONData = JsonConvert.DeserializeObject<SongData>(descDump, new JsonSerializerSettings
+                                {
+                                    Error = (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs args) =>
+                                    {
+                                        args.ErrorContext.Handled = true;
+                                        MelonLogger.LogError(data.zipPath + ": song.desc has invalid values");
+                                    }
+                                });
+
+                                AllSongData[data.songID] = JSONData;
+                            }
                         }
+                        SongDataLoaded = true;
+                        SongFiles.Dispose();
                     }
-                    SongDataLoaded = true;
-                    SongFiles.Dispose();
-                }
+
+                    
+                }).Start();
             }
         }
 
@@ -147,6 +161,8 @@ namespace AudicaModding
             SongDataLoaded = false;
             LoadSongData();
         }
+
+
     }
 }
 
