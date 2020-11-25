@@ -35,6 +35,9 @@ Returns true if a specified SongData has custom data for a specified key
 
 * <code>public T GetCustomData`<T>`(string key)</code>
  generic function that gets data for a specific SongData that corresponds to a given key
+ 
+ * <code>public static bool IsDataLoaded()</code>
+ returns true if data loading has finished
 
 
 ### Usage Examples
