@@ -45,6 +45,9 @@ namespace AudicaModding
             int type;
             float xPosMini;
             float xPosTop;
+            string text;
+            Color color;
+            int uiColor;
         }
 
         public class SongData
@@ -74,6 +77,9 @@ namespace AudicaModding
 
             //optional
             public NRBookmark[] bookmarks { get; set; }
+
+            public string albumArt { get; set; }
+            public byte[] albumArtData { get; set; }
             public string author { get; set; }
             public float previewStartSeconds { get; set; }
             public string targetDrums { get; set; }
@@ -144,14 +150,33 @@ namespace AudicaModding
                                     }
                                 });
 
+                                if (JSONData.albumArt != null && (JSONData.albumArt.Length > 0))
+                                {
+                                    MelonLogger.Log(data.zipPath + " has cover path. looking for cover (" + JSONData.albumArt + ")");
+                                    foreach (ZipArchiveEntry file in SongFiles.Entries)
+                                    {
+                                        if (file.Name == JSONData.albumArt)
+                                        {
+                                            MelonLogger.Log(data.zipPath + " has cover art");
+                                            Stream filestream = file.Open();
+
+                                            using (MemoryStream ms = new MemoryStream())
+                                            {
+                                                filestream.CopyTo(ms);
+                                                JSONData.albumArtData = ms.ToArray();
+                                            }                                          
+                                        }
+                                    }
+
+                                }
+
                                 AllSongData[data.songID] = JSONData;
                             }
                         }
                         SongDataLoaded = true;
                         SongFiles.Dispose();
                     }
-
-                    
+                    MelonLogger.Log("Done Loading");
                 }).Start();
             }
         }
@@ -160,6 +185,8 @@ namespace AudicaModding
         {
             SongDataLoaded = false;
             LoadSongData();
+
+            
         }
 
 
