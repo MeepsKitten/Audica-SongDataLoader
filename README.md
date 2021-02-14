@@ -1,17 +1,21 @@
 # Song Data Loader
  A utility that allows mods to read default and custom song data from `song.desc`
  
- # Mods That use Song Data Loader
- * [Custom Difficulty Names](https://github.com/MeepsKitten/Audica-CustomDifficultyNames)
+# Download
+[Song Data Loader Download](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest)
  
- (Missing a mod? Contact CB#1997 on Discord)
+# Mods That use Song Data Loader
+* [Song Browser](https://github.com/Silzoid/SongBrowser)
+* [Meeps' UI Enhancements](https://github.com/MeepsKitten/Meeps-Audica-UI-Enhancements)
+ 
+(Missing a mod? Contact CB#1997 on Discord)
 
- # Using Song Data Loader in your mod
- * Grab [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest)
- * Add it as a refrence in your project
- * Include the dll with your mod download (or ask them to download it from [here](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest))
+# Using Song Data Loader in your mod
+* Grab [this dll](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest)
+* Add it as a refrence in your project
+* Include the dll with your mod download (or ask them to download it from [here](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest))
  
-   Need help? Contact CB#1997 on Discord
+Need help? Contact CB#1997 on Discord
  
 # "Documentation"
 ## public class SongDataLoader
