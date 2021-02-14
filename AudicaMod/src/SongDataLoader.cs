@@ -36,7 +36,7 @@ namespace AudicaModding
             public const string Name = "SongDataLoader";  // Name of the Mod.  (MUST BE SET)
             public const string Author = "MeepsKitten"; // Author of the Mod.  (Set as null if none)
             public const string Company = null; // Company that made the Mod.  (Set as null if none)
-            public const string Version = "1.1.0"; // Version of the Mod.  (MUST BE SET)
+            public const string Version = "1.2.0"; // Version of the Mod.  (MUST BE SET)
             public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
         }
 
@@ -152,12 +152,12 @@ namespace AudicaModding
 
                                 if (JSONData.albumArt != null && (JSONData.albumArt.Length > 0))
                                 {
-                                    MelonLogger.Log(data.zipPath + " has cover path. looking for cover (" + JSONData.albumArt + ")");
+                                    //MelonLogger.Log(data.zipPath + " has cover path. looking for cover (" + JSONData.albumArt + ")");
                                     foreach (ZipArchiveEntry file in SongFiles.Entries)
                                     {
                                         if (file.Name == JSONData.albumArt)
                                         {
-                                            MelonLogger.Log(data.zipPath + " has cover art");
+                                            //MelonLogger.Log(data.zipPath + " has cover art");
                                             Stream filestream = file.Open();
 
                                             using (MemoryStream ms = new MemoryStream())
