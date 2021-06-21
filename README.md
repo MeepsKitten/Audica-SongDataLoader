@@ -3,6 +3,8 @@
  
 # Download
 [Song Data Loader Download](https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest)
+
+[Legacy version for MelonLoader 0.2.7.X](https://github.com/MeepsKitten/Audica-SongDataLoader/releases/tag/v1.2.0)
  
 # Mods That use Song Data Loader
 * [Song Browser](https://github.com/Silzoid/SongBrowser)
