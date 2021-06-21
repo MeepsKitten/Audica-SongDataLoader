@@ -36,8 +36,8 @@ namespace AudicaModding
             public const string Name = "SongDataLoader";  // Name of the Mod.  (MUST BE SET)
             public const string Author = "MeepsKitten"; // Author of the Mod.  (Set as null if none)
             public const string Company = null; // Company that made the Mod.  (Set as null if none)
-            public const string Version = "1.2.0"; // Version of the Mod.  (MUST BE SET)
-            public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
+            public const string Version = "1.3.1"; // Version of the Mod.  (MUST BE SET)
+            public const string DownloadLink = "https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest"; // Download Link for the Mod.  (Set as null if none)
         }
 
         public class NRBookmark
@@ -93,7 +93,7 @@ namespace AudicaModding
             {
                 if (!SongDataLoaded)
                 {
-                    MelonLogger.Log("Song data not loaded before attempted use");
+                    MelonLogger.Msg("Song data not loaded before attempted use");
                     return false;
                 }
 
@@ -125,8 +125,8 @@ namespace AudicaModding
             {
                 AllSongData = new Dictionary<string, SongData>();
 
-                new Thread(() =>
-                {
+                //new Thread(() =>
+                //{
                     Thread.CurrentThread.IsBackground = true;
 
                     foreach (SongList.SongData data in SongList.I.songs.ToArray())
@@ -146,7 +146,7 @@ namespace AudicaModding
                                     Error = (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs args) =>
                                     {
                                         args.ErrorContext.Handled = true;
-                                        MelonLogger.LogError(data.zipPath + ": song.desc has invalid values");
+                                        MelonLogger.Error(data.zipPath + ": song.desc has invalid values");
                                     }
                                 });
 
@@ -176,8 +176,8 @@ namespace AudicaModding
                         SongDataLoaded = true;
                         SongFiles.Dispose();
                     }
-                    MelonLogger.Log("Done Loading");
-                }).Start();
+                    MelonLogger.Msg("Done Loading");
+                //}).Start();
             }
         }
 

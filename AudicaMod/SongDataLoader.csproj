@@ -67,9 +67,9 @@
       <HintPath>lib\Il2CppSystem.Xml.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MelonLoader.ModHandler">
-      <HintPath>lib\MelonLoader.ModHandler.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="MelonLoader, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
