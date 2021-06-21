@@ -146,7 +146,7 @@ namespace AudicaModding
                                     Error = (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs args) =>
                                     {
                                         args.ErrorContext.Handled = true;
-                                        MelonLogger.Error(data.zipPath + ": song.desc has invalid values");
+                                        MelonLogger.Warning(data.zipPath + ": song.desc has invalid values. Custom data will not be loaded");
                                     }
                                 });
 
