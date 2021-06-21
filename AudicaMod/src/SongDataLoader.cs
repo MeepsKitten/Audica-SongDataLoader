@@ -36,7 +36,7 @@ namespace AudicaModding
             public const string Name = "SongDataLoader";  // Name of the Mod.  (MUST BE SET)
             public const string Author = "MeepsKitten"; // Author of the Mod.  (Set as null if none)
             public const string Company = null; // Company that made the Mod.  (Set as null if none)
-            public const string Version = "1.3.1"; // Version of the Mod.  (MUST BE SET)
+            public const string Version = "1.2.1"; // Version of the Mod.  (MUST BE SET)
             public const string DownloadLink = "https://github.com/MeepsKitten/CustomSongDataLoader/releases/latest"; // Download Link for the Mod.  (Set as null if none)
         }
 
